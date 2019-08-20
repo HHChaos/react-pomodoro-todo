@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Table, Divider, Button, Popconfirm, Form } from 'antd';
+import { Table, Button, Popconfirm } from 'antd';
 import { actions as todoActions } from "../redux/reducers/todo";
 import { EditableFormRow, EditableCell } from "./EditableCell"
 import './TodoList.css';

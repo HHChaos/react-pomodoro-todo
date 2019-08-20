@@ -7,7 +7,12 @@ const initialState = {
         },
         {
             id: generateUUID(),
-            content: "勾选左侧选择框标记完成该待办",
+            content: "勾选/取消勾选左侧选择框，可以更改该待办的完成状态",
+            fulfilled: false
+        },
+        {
+            id: generateUUID(),
+            content: "点击待办内容可以编辑",
             fulfilled: false
         },
         {
@@ -56,6 +61,7 @@ export const actions = {
 };
 
 const reducer = (state = initialState, action) => {
+    //console.log("action " + JSON.stringify(action));
     switch (action.type) {
         case types.ADD_TODO:
             return {
@@ -69,7 +75,7 @@ const reducer = (state = initialState, action) => {
         case types.FULFILL_TODO:
             return {
                 todos: [...state.todos.map(item => {
-                    if (item.id == action.todoID) {
+                    if (item.id === action.todoID) {
                         item.fulfilled = true;
                     }
                     return item;
@@ -78,18 +84,18 @@ const reducer = (state = initialState, action) => {
         case types.UNFULFILL_TODO:
             return {
                 todos: [...state.todos.map(item => {
-                    if (item.id == action.todoID) {
+                    if (item.id === action.todoID) {
                         item.fulfilled = false;
                     }
                     return item;
                 })]
             };
         case types.DELETE_TODO:
-            return { todos: [...state.todos.filter(item => item.id != action.todoID)] };
+            return { todos: [...state.todos.filter(item => item.id !== action.todoID)] };
         case types.EDIT_TODO:
             return {
                 todos: [...state.todos.map(item => {
-                    if (item.id == action.todoID) {
+                    if (item.id === action.todoID) {
                         item.content = action.content;
                     }
                     return item;

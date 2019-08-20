@@ -1,7 +1,7 @@
 const initialState = {
     workTimer: 25 * 60 * 1000,
-    shortBreak: 5 * 60 * 1000,
-    longBreak: 5 * 60 * 1000,
+    shortBreak: 1 * 60 * 1000,
+    longBreak: 15 * 60 * 1000,
     completedRings: 0,
     inBreak: false,
     inPause: true
@@ -26,13 +26,24 @@ export const actions = {
 };
 
 const reducer = (state = initialState, action) => {
+    //console.log("action " + JSON.stringify(action));
     switch (action.type) {
         case types.START_TIMER:
             return { ...state, inPause: false };
         case types.PAUSE_TIMER:
-            return { ...state, inPause: true };
+            return {
+                ...state,
+                completedRings: state.inBreak ? ++state.completedRings : state.completedRings,
+                inPause: true,
+                inBreak: !state.inBreak
+            };
         case types.COMPLETE_TIMER:
-            return { ...state, inBreak: !state.inBreak };
+            return {
+                ...state,
+                completedRings: state.inBreak ? ++state.completedRings : state.completedRings,
+                inPause: true,
+                inBreak: !state.inBreak
+            };
         default:
             return state;
     }

@@ -22,7 +22,17 @@ const initialState = {
         },
         {
             id: generateUUID(),
+            content: "已完成的可以直接点击右侧删除，未完成的删除前需要二次确认",
+            fulfilled: false
+        },
+        {
+            id: generateUUID(),
             content: "在下面的输入框输入待办内容添加新待办",
+            fulfilled: false
+        },
+        {
+            id: generateUUID(),
+            content: "暂无保存功能，所以请勿刷新界面，将导致数据丢失",
             fulfilled: false
         },
     ]

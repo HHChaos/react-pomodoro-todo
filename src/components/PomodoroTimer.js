@@ -7,7 +7,6 @@ import './PomodoroTimer.css';
 import QueueAnim from 'rc-queue-anim';
 
 const { Countdown } = Statistic;
-const { Footer, Header, Content } = Layout;
 
 class PomodoroTimer extends Component {
     constructor(props) {
@@ -85,15 +84,9 @@ class PomodoroTimer extends Component {
                             </QueueAnim>
                         </Col>
                     </Row>
-
-
                 </div>
-
-
                 <Countdown key='a' ref={node => (this.timer = node)} onFinish={this.handleOnFinish} value={this.deadline} format="mm:ss" />
             </div>
-
-
         );
     };
 

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Statistic, Row, Col } from 'antd';
+import { Statistic, Layout, Row, Col } from 'antd';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actions as pomodoroActions } from "../redux/reducers/pomodoro";
 import './PomodoroTimer.css';
+import QueueAnim from 'rc-queue-anim';
 
 const { Countdown } = Statistic;
+const { Footer, Header, Content } = Layout;
 
 class PomodoroTimer extends Component {
     constructor(props) {
@@ -57,13 +59,44 @@ class PomodoroTimer extends Component {
     }
     render() {
         return (
-            <Row gutter={16}>
-                <Col span={12}>
-                    <Countdown title={this.props.inBreak ? "Take a Break" : "In Work"} ref={node => (this.timer = node)} onFinish={this.handleOnFinish} value={this.deadline} format="mm:ss" />
-                </Col>
-            </Row>
+            <div>
+                <div style={{ height: 200 }}>
+                    <Row>
+                        <Col span={10} style={{ textAlign: 'left' }} >
+                            <QueueAnim
+                                animConfig={[
+                                    { opacity: [1, 0], translateX: [0, -100] },
+                                    { opacity: [1, 0], translateX: [-100, 100] }
+                                ]}>
+                                {this.props.inBreak ?
+                                    null
+                                    : <div key='a' class="pomodoro-title-left">In Work</div>}
+                            </QueueAnim>
+                        </Col>
+                        <Col span={14} style={{ textAlign: 'right' }} >
+                            <QueueAnim
+                                animConfig={[
+                                    { opacity: [1, 0], translateX: [0, -100] },
+                                    { opacity: [1, 0], translateX: [-100, -200] }
+                                ]}>
+                                {this.props.inBreak ?
+                                    <div key='a' class="pomodoro-title-right">Take a Break</div>
+                                    : null}
+                            </QueueAnim>
+                        </Col>
+                    </Row>
+
+
+                </div>
+
+
+                <Countdown key='a' ref={node => (this.timer = node)} onFinish={this.handleOnFinish} value={this.deadline} format="mm:ss" />
+            </div>
+
+
         );
-    }
+    };
+
 }
 const mapStateToProps = (state, props) => {
     return {

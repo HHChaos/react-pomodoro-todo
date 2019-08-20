@@ -17,7 +17,7 @@ const initialState = {
         },
         {
             id: generateUUID(),
-            content: "在下面的输入框输入并添加新待办",
+            content: "在下面的输入框输入待办内容添加新待办",
             fulfilled: false
         },
     ]
@@ -25,8 +25,10 @@ const initialState = {
 
 export const types = {
     ADD_TODO: "ADD_TODO",
-    TOGGLE_FULLFILL_TODO: "TOGGLE_FULLFILL_TODO",
+    FULFILL_TODO: "FULFILL_TODO",
+    UNFULFILL_TODO: "UNFULFILL_TODO",
     DELETE_TODO: "DELETE_TODO",
+    EDIT_TODO: "EDIT_TODO"
 };
 
 export const actions = {
@@ -34,13 +36,22 @@ export const actions = {
         type: types.ADD_TODO,
         content: content
     }),
-    toggleFulfillTodo: id => ({
-        type: types.TOGGLE_FULLFILL_TODO,
+    fulfillTodo: id => ({
+        type: types.FULFILL_TODO,
+        todoID: id
+    }),
+    unfulfillTodo: id => ({
+        type: types.UNFULFILL_TODO,
         todoID: id
     }),
     deleteTodo: id => ({
         type: types.DELETE_TODO,
         todoID: id
+    }),
+    editTodo: (id, content) => ({
+        type: types.EDIT_TODO,
+        todoID: id,
+        content: content
     })
 };
 
@@ -55,17 +66,35 @@ const reducer = (state = initialState, action) => {
                     fulfilled: false
                 }]
             };
-        case types.TOGGLE_FULLFILL_TODO:
-            let newTodos = state.todos.map(item => {
-                if (item.id == action.todoID) {
-                    item.fulfilled = !item.fulfilled;
-                }
-                return item;
-            })
-            return { todos: [...newTodos] };
+        case types.FULFILL_TODO:
+            return {
+                todos: [...state.todos.map(item => {
+                    if (item.id == action.todoID) {
+                        item.fulfilled = true;
+                    }
+                    return item;
+                })]
+            };
+        case types.UNFULFILL_TODO:
+            return {
+                todos: [...state.todos.map(item => {
+                    if (item.id == action.todoID) {
+                        item.fulfilled = false;
+                    }
+                    return item;
+                })]
+            };
         case types.DELETE_TODO:
-            let newTodos = state.todos.filter(item => item.id != action.todoID)
-            return { todos: [...newTodos] };
+            return { todos: [...state.todos.filter(item => item.id != action.todoID)] };
+        case types.EDIT_TODO:
+            return {
+                todos: [...state.todos.map(item => {
+                    if (item.id == action.todoID) {
+                        item.content = action.content;
+                    }
+                    return item;
+                })]
+            };
         default:
             return state;
     }
@@ -76,7 +105,7 @@ export default reducer;
 function generateUUID() {
     var d = new Date().getTime();
     if (window.performance && typeof window.performance.now === "function") {
-        d += performance.now(); 
+        d += performance.now();
     }
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = (d + Math.random() * 16) % 16 | 0;

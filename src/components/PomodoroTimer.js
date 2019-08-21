@@ -79,8 +79,8 @@ class PomodoroTimer extends Component {
                         <Col span={10} style={{ textAlign: 'left' }} >
                             <QueueAnim
                                 animConfig={[
-                                    { opacity: [1, 0], translateX: [0, -100] },
-                                    { opacity: [1, 0], translateX: [-100, 100] }
+                                    { opacity: [1, 0], translateX: [0, 100] },
+                                    { opacity: [1, 0], translateX: [100, 200] }
                                 ]}>
                                 {this.props.inBreak ?
                                     null

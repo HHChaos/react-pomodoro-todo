@@ -54,7 +54,19 @@ class PomodoroTimer extends Component {
     }
 
     handleOnFinish = () => {
+        const inBreak = this.props.inBreak;
         this.props.pauseTimer();
+        if (window.Notification && Notification.permission !== "denied") {
+            Notification.requestPermission(status => {
+                if (status === 'granted') {
+                    var n = new Notification('时间到啦！', {
+                        body: inBreak ? '休息时间结束了，继续工作吧！' : '工作久了，休息一下！',
+                        icon: './logo512.png',
+                        requireInteraction: true
+                    });
+                }
+            });
+        }
     }
     render() {
         return (

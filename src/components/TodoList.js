@@ -82,6 +82,7 @@ class TodoList extends Component {
                     <h2>今日待办</h2>
                 </div>
                 <Table
+                    scroll={{ y: '64vh' }}
                     style={{borderWidth: '1px 0px 0px 0px',borderColor:'#e8e8e8', borderStyle:'solid'}}
                     showHeader={false}
                     components={components}

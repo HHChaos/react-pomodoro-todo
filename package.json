@@ -2,6 +2,7 @@
   "name": "react-pomodoro-todo",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "antd": "^3.22.0",
     "rc-queue-anim": "^1.7.0",
@@ -12,6 +13,8 @@
     "redux": "^4.0.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
